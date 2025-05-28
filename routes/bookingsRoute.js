@@ -43,7 +43,7 @@ router.post('/book-seat', authMiddlewares, async (req, res) => {
 //get booking by user
 router.post('/get-bookings-by-user-id',authMiddlewares,async (req, res) => {
   try {
-    const user  = await usersModel.findById({user:req.body.userId}) ; 
+    const user = await usersModel.findById(req.body.userId);
     let bookings ;
 if(user.isAdmin) {
    bookings = await Booking.find() 
