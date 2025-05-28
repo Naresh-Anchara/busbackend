@@ -19,7 +19,8 @@ const allowedOrigins = ["http://localhost:3000"];
 
 app.use(
   cors({
-    origin: 'https://naresh-anchara.github.io',
+    origin: 'https://naresh-anchara.github.io/bus1',
+
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
