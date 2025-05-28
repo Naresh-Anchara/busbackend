@@ -1,9 +1,10 @@
 const moogoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
-const Booking = require('../models/bookingModel');
+const Booking = require('../models/bookingModel'); 
 const Bus = require('../models/busModel');
 const authMiddlewares = require('../middlewares/authMiddlewares');
+const usersModel = require('../models/usersModel');
 // book a seat
 router.post('/book-seat', authMiddlewares, async (req, res) => {
   try {
@@ -42,9 +43,19 @@ router.post('/book-seat', authMiddlewares, async (req, res) => {
 //get booking by user
 router.post('/get-bookings-by-user-id',authMiddlewares,async (req, res) => {
   try {
-    const bookings = await Booking.find({ user: req.body.userId })
-    .populate("bus")
-    .populate("user");
+    const user  = await usersModel.findById({user:req.body.userId}) ; 
+    let bookings ;
+if(user.isAdmin) {
+   bookings = await Booking.find() 
+   .populate("bus") 
+    .populate("user")
+} 
+else {
+ bookings = await Booking.find({ user: req.body.userId })  
+ .populate("bus")
+    .populate("user")
+}
+    
 
   res.status(200).send({
     message: 'Booking fetched successfully',
